@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title> Reddit Context App </title>
+		<link rel = "stylesheet" type = "text/css" href = "//fonts.googleapis.com/css?family=Varela+Round" />
+		<link rel = "stylesheet" type = "text/css" href = "{{ url_for('static', filename = 'style.css') }}" />
+	</head>
+
+	<body>
+		<h1> Reddit Context App </h1>
+		<form action="/">
+			Reddit URL:
+			<br>
+			<input type = "text" name = "Post Title or URL">
+			<input type = "submit" value = "Submit" method = "get">
+		</form>
+
+		<p>
+		Recommended Posts:
+		{% if recommendations is none %}
+			<br> Please insert input above.
+		{% elif recommendations == "Invalid" %}
+			<br> Post not found. Please enter a valid Reddit URL.
+		{% else %}
+			{% for post in recommendations %}
+				<br> 
+				{% if post|length > 100 %} 
+					<a href = {{recommendations[post]}}>{{ post[:100] }}...</a>
+				{% else %}
+					<a href = {{recommendations[post]}}>{{ post }}</a>
+				{% endif %}
+			{% endfor %}
+		{% endif %}
+		</p>
+	</body>
+</html>
